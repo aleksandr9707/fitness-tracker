@@ -1,0 +1,33 @@
+<%- include('../partials/header', { title: 'Workouts' }) %>
+
+<h1>Workouts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Duration</th>
+      <th>Bodyweight</th>
+      <th>Notes</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% workouts.forEach((workout) => { %>
+      <tr>
+        <td><%= workout.name %></td>
+        <td><%= workout.duration %> minutes</td>
+        <td><%= workout.bodyweight %> kg</td>
+        <td><%= workout.notes %></td>
+        <td>
+          <a href="/workouts/<%= workout._id %>">View</a>
+          <form method="POST" action="/workouts/<%= workout._id %>?_method=DELETE">
+            <button type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include('../partials/footer', { year: new Date().getFullYear() }) %>

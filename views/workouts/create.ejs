@@ -1,0 +1,82 @@
+<%- include('../partials/header', { title: 'Create Workout' }) %>
+<h1>Create Workout</h1>
+<form action="/workouts" method="POST">
+  <input type="text" name="name" placeholder="Workout Name" required>
+  <input type="number" name="duration" placeholder="Duration (minutes)" required>
+  <input type="number" name="bodyweight" placeholder="Bodyweight (lb)" required>
+  <textarea name="notes" placeholder="Notes"></textarea>
+  <label for="start-time">Start Time:</label>
+  <input type="datetime-local" id="start-time" name="startTime" required>
+  <label for="end-time">End Time:</label>
+  <input type="datetime-local" id="end-time" name="endTime">
+
+  <!-- Add input fields for exercise details -->
+  <h3>Exercises:</h3>
+  <div id="exerciseFields">
+    <div class="exercise">
+      <input type="text" name="exercises[][name]" placeholder="Exercise Name" required>
+
+      <!-- Add input fields for sets, reps, and weight -->
+      <h4>Sets:</h4>
+      <div class="setFields">
+        <div class="set">
+          <input type="number" name="exercises[][sets][]" placeholder="Sets" required>
+          <input type="number" name="exercises[][reps][]" placeholder="Reps" required>
+          <input type="number" name="exercises[][weight][]" placeholder="Weight (lb)" required>
+        </div>
+      </div>
+      <button type="button" onclick="addSetField(this)">Add Set</button>
+    </div>
+  </div>
+  <button type="button" onclick="addExerciseField()">Add Exercise</button>
+
+  <button type="submit">Create Workout</button>
+</form>
+
+<%- include('../partials/footer', { year: new Date().getFullYear() }) %>
+
+<script>
+  // Auto-populate the starting time field with the current time in Eastern Time (ET)
+  const startTimeField = document.getElementById('start-time');
+  const now = new Date();
+  const etOffset = -4; // Eastern Time (ET) offset is UTC-4
+  const currentTime = new Date(now.getTime() + etOffset * 60 * 60 * 1000).toISOString().slice(0, 16);
+  startTimeField.value = currentTime;
+
+  // Function to add set fields dynamically
+  function addSetField(button) {
+    const setFieldsContainer = button.parentElement.querySelector('.setFields');
+    const setTemplate = document.createElement('div');
+    setTemplate.classList.add('set');
+    setTemplate.innerHTML = `
+      <input type="number" name="exercises[][sets][]" placeholder="Sets" required>
+      <input type="number" name="exercises[][reps][]" placeholder="Reps" required>
+      <input type="number" name="exercises[][weight][]" placeholder="Weight (lb)" required>
+    `;
+    setFieldsContainer.appendChild(setTemplate);
+  }
+
+  // Function to add exercise fields dynamically
+  function addExerciseField() {
+    const exerciseFieldsContainer = document.getElementById('exerciseFields');
+    const exerciseTemplate = document.createElement('div');
+    exerciseTemplate.classList.add('exercise');
+    exerciseTemplate.innerHTML = `
+      <input type="text" name="exercises[][name]" placeholder="Exercise Name" required>
+
+      <!-- Add input fields for sets, reps, and weight -->
+      <h4>Sets:</h4>
+      <div class="setFields">
+        <div class="set">
+          <input type="number" name="exercises[][sets][]" placeholder="Sets" required>
+          <input type="number" name="exercises[][reps][]" placeholder="Reps" required>
+          <input type="number" name="exercises[][weight][]" placeholder="Weight (lb)" required>
+        </div>
+      </div>
+      <button type="button" onclick="addSetField(this)">Add Set</button>
+    `;
+    exerciseFieldsContainer.appendChild(exerciseTemplate);
+  }
+</script>
+
+

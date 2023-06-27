@@ -1,0 +1,26 @@
+<!-- workouts.ejs -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Workouts</title>
+  <!-- Include your CSS stylesheets -->
+  <link rel="stylesheet" href="/stylesheets/main.css">
+</head>
+<body>
+  <!-- Include the header partial -->
+  <%- include('partials/header') %>
+
+  <h1>Workouts</h1>
+  <ul>
+    <% workouts.forEach(function(workout) { %>
+      <li><%= workout.name %></li>
+    <% }); %>
+  </ul>
+  <a href="/workouts/new">Create New Workout</a>
+
+  <!-- Include the footer partial -->
+  <%- include('partials/footer') %>
+</body>
+</html>
