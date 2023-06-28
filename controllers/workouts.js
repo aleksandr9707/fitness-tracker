@@ -27,11 +27,11 @@ async function create(req, res) {
 
     // Convert the exercises array to the desired format
     const parsedExercises = exercises.map((exercise) => ({
-      name: exercise.name,
-      sets: exercise.sets.map(Number),
-      weight: exercise.weight.map(Number),
-      reps: exercise.reps.map(Number),
-      notes: exercise.notes,
+      name: Array.isArray(exercise.name) ? exercise.name[0] : exercise.name,
+      sets: Array.isArray(exercise.sets) ? exercise.sets.map(Number) : [],
+      reps: Array.isArray(exercise.reps) ? exercise.reps.map(Number) : [],
+      weight: Array.isArray(exercise.weight) ? exercise.weight.map(Number) : [],
+      notes: Array.isArray(exercise.notes) ? exercise.notes : [],
     }));
 
     const workout = await Workout.create({
@@ -48,23 +48,48 @@ async function create(req, res) {
   }
 }
 
+
+
+
+
 async function show(req, res, next) {
   try {
     const workoutId = req.params.id;
-    console.log('Workout ID:', workoutId);
-
     const workout = await Workout.findById(workoutId);
-    console.log('Retrieved Workout:', workout);
 
     if (!workout) {
       return res.status(404).render('error', { message: 'Workout not found' });
     }
 
-    res.render('workouts/show', { workout });
+    const renderedWorkout = {
+      name: workout.name,
+      duration: workout.duration,
+      bodyweight: workout.bodyweight,
+      notes: workout.notes,
+      startTime: workout.startTime,
+      endTime: workout.endTime,
+      exercises: [],
+    };
+
+    workout.exercises.forEach((exercise) => {
+      const renderedExercise = {
+        name: exercise.name,
+        sets: exercise.sets,
+        reps: exercise.reps,
+        weight: exercise.weight,
+        notes: exercise.notes,
+      };
+
+      renderedWorkout.exercises.push(renderedExercise);
+    });
+
+    res.render('workouts/show', { workout: renderedWorkout });
   } catch (err) {
     next(err);
   }
 }
+
+
 
 
 async function remove(req, res) {
@@ -78,3 +103,4 @@ async function remove(req, res) {
     res.status(500).json({ error: err.message });
   }
 }
+

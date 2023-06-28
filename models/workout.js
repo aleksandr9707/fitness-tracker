@@ -6,11 +6,11 @@ const workoutSchema = new mongoose.Schema({
   bodyweight: Number,
   notes: String,
   exercises: [{
-    name: [String], // Update the name field to an array of strings
+    name: String,
     sets: [Number],
     reps: [Number],
     weight: [Number],
-    notes: String,
+    notes: [String],
   }],
 });
 

@@ -1,0 +1,49 @@
+<h1>Edit Workout</h1>
+
+<form method="POST" action="/workouts/<%= workout._id %>?_method=PUT">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" value="<%= workout.name %>" required>
+  </div>
+  <div>
+    <label for="duration">Duration (minutes):</label>
+    <input type="number" id="duration" name="duration" value="<%= workout.duration %>" required>
+  </div>
+  <div>
+    <label for="bodyweight">Bodyweight (lb):</label>
+    <input type="number" id="bodyweight" name="bodyweight" value="<%= workout.bodyweight %>" required>
+  </div>
+  <div>
+    <label for="notes">Notes:</label>
+    <textarea id="notes" name="notes"><%= workout.notes %></textarea>
+  </div>
+  
+  <!-- Exercise Fields -->
+  <% workout.exercises.forEach((exercise, index) => { %>
+    <h2>Exercise <%= index + 1 %></h2>
+    <div>
+      <label for="exerciseName<%= index %>">Exercise Name:</label>
+      <input type="text" id="exerciseName<%= index %>" name="exercises[<%= index %>][name]" value="<%= exercise.name %>" required>
+    </div>
+    <div>
+      <label for="sets<%= index %>">Sets:</label>
+      <input type="number" id="sets<%= index %>" name="exercises[<%= index %>][sets]" value="<%= exercise.sets %>" required>
+    </div>
+    <div>
+      <label for="reps<%= index %>">Reps:</label>
+      <input type="number" id="reps<%= index %>" name="exercises[<%= index %>][reps]" value="<%= exercise.reps %>" required>
+    </div>
+    <div>
+      <label for="weight<%= index %>">Weight (lb):</label>
+      <input type="number" id="weight<%= index %>" name="exercises[<%= index %>][weight]" value="<%= exercise.weight %>" required>
+    </div>
+    <div>
+      <label for="notes<%= index %>">Notes:</label>
+      <textarea id="notes<%= index %>" name="exercises[<%= index %>][notes]"><%= exercise.notes %></textarea>
+    </div>
+  <% }); %>
+  
+  <!-- Add more exercise fields if needed -->
+  
+  <button type="submit">Update Workout</button>
+</form>

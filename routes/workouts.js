@@ -25,7 +25,17 @@ router.get('/:id', async (req, res, next) => {
       next(err);
     }
   });
-
+// Edit a workout
+router.get('/:id/edit', async (req, res) => {
+    try {
+      const workout = await Workout.findById(req.params.id);
+      res.render('edit', { workout });
+    } catch (error) {
+      console.log(error);
+      res.redirect('/workouts');
+    }
+  });
+  
 // Delete a workout
 router.delete('/:id', workoutsCtrl.remove);
 

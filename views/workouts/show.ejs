@@ -1,42 +1,30 @@
 <%- include('../partials/header', { title: 'Workout Details' }) %>
-
-<div>
-  <h2><%= workout.name %></h2>
-  <p>Duration: <%= workout.duration %> minutes</p>
-  <p>Bodyweight: <%= workout.bodyweight %> lbs</p>
-  <p>Notes: <%= workout.notes %></p>
-  <p>Start Time: <%= workout.startTime %></p>
-  <p>End Time: <%= workout.endTime %></p>
-</div>
-
-<h2>Exercises</h2>
+<h1>Workout Details</h1>
+<h2><%= workout.name %></h2>
+<p>Duration: <%= workout.duration %> minutes</p>
+<p>Bodyweight: <%= workout.bodyweight %> lb</p>
+<p>Notes: <%= workout.notes %></p>
 
 <% workout.exercises.forEach((exercise) => { %>
-  <div class="exercise">
-    <h3><%= exercise.name %></h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Set</th>
-          <th>Weight (lbs)</th>
-          <th>Reps</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% exercise.sets.forEach((set, index) => { %>
-          <tr>
-            <td><%= index + 1 %></td>
-            <td><%= set.weight %> lbs</td>
-            <td><%= set.reps %></td>
-            <td><%= set.notes %></td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
-  </div>
-  <br> <!-- Add a line break after each exercise -->
-<% }) %>
+  <h3><%= exercise.name %></h3>
+  <table>
+    <caption><%= exercise.name %> Sets</caption>
+    <tr>
+      <th>Sets</th>
+      <th>Reps</th>
+      <th>Weight (lb)</th>
+      <th>Notes</th>
+    </tr>
+    <% exercise.sets.forEach((set, index) => { %>
+      <tr>
+        <td><%= set %></td>
+        <td><%= exercise.reps[index] %></td>
+        <td><%= exercise.weight[index] %></td>
+        <td><%= exercise.notes[index] %></td>
+      </tr>
+    <% }); %>
+  </table>
+<% }); %>
 
 <%- include('../partials/footer', { year: new Date().getFullYear() }) %>
 

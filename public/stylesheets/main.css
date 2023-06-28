@@ -43,3 +43,6 @@ body {
     padding: 6px 8px;
   }
   
+  #exerciseName {
+    margin: 100px;
+  }

@@ -1,5 +1,7 @@
 <%- include('../partials/header', { title: 'Create Workout' }) %>
+
 <h1>Create Workout</h1>
+
 <form action="/workouts" method="POST">
   <input type="text" name="name" placeholder="Workout Name" required>
   <input type="number" name="duration" placeholder="Duration (minutes)" required>
@@ -16,13 +18,14 @@
     <div class="exercise">
       <input type="text" name="exercises[][name]" placeholder="Exercise Name" required>
 
-      <!-- Add input fields for sets, reps, and weight -->
+      <!-- Add input fields for sets, reps, weight, and notes -->
       <h4>Sets:</h4>
       <div class="setFields">
         <div class="set">
-          <input type="number" name="exercises[][sets][]" placeholder="Sets" required>
-          <input type="number" name="exercises[][reps][]" placeholder="Reps" required>
-          <input type="number" name="exercises[][weight][]" placeholder="Weight (lb)" required>
+          <input type="number" name="exercises[][sets]" placeholder="Sets" required>
+          <input type="number" name="exercises[][reps]" placeholder="Reps" required>
+          <input type="number" name="exercises[][weight]" placeholder="Weight (lb)" required>
+          <textarea name="exercises[][notes]" placeholder="Set Notes"></textarea>
         </div>
       </div>
       <button type="button" onclick="addSetField(this)">Add Set</button>
@@ -49,9 +52,10 @@
     const setTemplate = document.createElement('div');
     setTemplate.classList.add('set');
     setTemplate.innerHTML = `
-      <input type="number" name="exercises[][sets][]" placeholder="Sets" required>
-      <input type="number" name="exercises[][reps][]" placeholder="Reps" required>
-      <input type="number" name="exercises[][weight][]" placeholder="Weight (lb)" required>
+      <input type="number" name="exercises[][sets]" placeholder="Sets" required>
+      <input type="number" name="exercises[][reps]" placeholder="Reps" required>
+      <input type="number" name="exercises[][weight]" placeholder="Weight (lb)" required>
+      <textarea name="exercises[][notes]" placeholder="Set Notes"></textarea>
     `;
     setFieldsContainer.appendChild(setTemplate);
   }
@@ -64,13 +68,14 @@
     exerciseTemplate.innerHTML = `
       <input type="text" name="exercises[][name]" placeholder="Exercise Name" required>
 
-      <!-- Add input fields for sets, reps, and weight -->
+      <!-- Add input fields for sets, reps, weight, and notes -->
       <h4>Sets:</h4>
       <div class="setFields">
         <div class="set">
-          <input type="number" name="exercises[][sets][]" placeholder="Sets" required>
-          <input type="number" name="exercises[][reps][]" placeholder="Reps" required>
-          <input type="number" name="exercises[][weight][]" placeholder="Weight (lb)" required>
+          <input type="number" name="exercises[][sets]" placeholder="Sets" required>
+          <input type="number" name="exercises[][reps]" placeholder="Reps" required>
+          <input type="number" name="exercises[][weight]" placeholder="Weight (lb)" required>
+          <textarea name="exercises[][notes]" placeholder="Set Notes"></textarea>
         </div>
       </div>
       <button type="button" onclick="addSetField(this)">Add Set</button>
@@ -78,5 +83,6 @@
     exerciseFieldsContainer.appendChild(exerciseTemplate);
   }
 </script>
+
 
 

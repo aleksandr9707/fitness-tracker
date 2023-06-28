@@ -21,6 +21,7 @@
         <td><%= workout.notes %></td>
         <td>
           <a href="/workouts/<%= workout._id %>">View</a>
+          <a href="/workouts/<%= workout._id %>/edit">Edit</a> <!-- Add Edit button -->
           <form method="POST" action="/workouts/<%= workout._id %>?_method=DELETE">
             <button type="submit">Delete</button>
           </form>
